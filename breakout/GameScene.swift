@@ -128,4 +128,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         addChild(lozeZone)
     }
 
+    func createBlocks()
+    {
+    
+      var xPosition = 10
+        var yPosition = 20
+        
+        let blockWidth = (int)((screenWidth - 60)/5)
+        let blockeHeight = 20
+        
+        for rows in 1...3{
+            let block = block(frame: CGRect(x: Xpostions, y: yPosition, width: blockWidth, height: blockeHeight))
+            block.bacgroundColor = UIColor.redColor()
+            view?.addSubview(block)
+            
+            blockArray.append(block)
+            allViewArray.append(block)
+            
+            blockCount++
+            
+            xpostions += (blockWidth + 10)
+            
+        }
+        
+        xpostions = 10
+        yPostion += (blockHeight + 10)
+    
+    }
+    
 }
