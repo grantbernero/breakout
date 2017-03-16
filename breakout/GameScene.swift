@@ -49,11 +49,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     func didBegin(_ contact: SKPhysicsContact)
     {
-        if contact.bodyA.node?.name = "brick" || contact.bodyB.node?.name = "brick"
+        if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick"
         {
             print("brick")
         }
-        else if contact.bodyA.node?.name = "lozeZone" || contact.bodyB.node?.name = "lozeZone"
+        else if contact.bodyA.node?.name == "lozeZone" || contact.bodyB.node?.name == "lozeZone"
         {
             print("You Lose")
         }
