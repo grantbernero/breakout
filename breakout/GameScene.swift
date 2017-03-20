@@ -51,11 +51,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     {
         if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick"
         {
-            print("brick")
+            print("You win!")
+            brick.removeFromParent()
         }
         else if contact.bodyA.node?.name == "lozeZone" || contact.bodyB.node?.name == "lozeZone"
         {
-            print("You Lose")
+            print("You Lose!")
         }
     }
     
@@ -131,15 +132,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     func createBlocks()
     {
     
-      var xPosition = 10
+        var xPosition = 10
         var yPosition = 20
         
         let blockWidth = (int)((screenWidth - 60)/5)
-        let blockeHeight = 20
+        let blockHeight = 20
         
         for rows in 1...3{
-            let block = block(frame: CGRect(x: Xpostions, y: yPosition, width: blockWidth, height: blockeHeight))
-            block.bacgroundColor = UIColor.redColor()
+            let block = block(frame: CGRect(x: xPosition, y: yPosition, width: blockWidth, height: blockHeight))
+            block.backgroundColor = UIColor.redColor()
             view?.addSubview(block)
             
             blockArray.append(block)
