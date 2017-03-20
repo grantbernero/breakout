@@ -147,12 +147,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             
             blockCount++
             
-            xpostions += (blockWidth + 10)
+            xPosition += (blockWidth + 10)
             
         }
         
-        xpostions = 10
-        yPostion += (blockHeight + 10)
+        xPosition = 10
+        yPosition += (blockeHeight + 10)
     
     }
     
