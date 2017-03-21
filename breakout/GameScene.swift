@@ -17,6 +17,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
     
     var brick: SKSpriteNode!
     
+    var brickHit = 0
+    
     override func didMove(to view: SKView)
     {
         physicsWorld.contactDelegate = self
@@ -24,8 +26,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         createBackground()
         makeBall()
         makePaddle()
-        makeBrick()
         makeLoseZone()
+        createBlocks()
         ball.physicsBody?.applyImpulse(CGVector(dx: 15, dy: 15)) //puts ball in motion
     }
     
@@ -52,7 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick"
         {
             print("You win!")
-            brick.removeFromParent()
+            brickHit += 1
+            if brickHit == 3
+            {
+                brick.removeFromParent()
+            }
         }
         else if contact.bodyA.node?.name == "lozeZone" || contact.bodyB.node?.name == "lozeZone"
         {
@@ -109,10 +115,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         addChild(paddle)
     }
     
-    func makeBrick()
+    func makeBrick(xPoint: Int, yPoint: Int, brickWidth: Int, brickHeight: Int)
     {
-        brick = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width / 3, height: frame.height / 25))
-        brick.position = CGPoint(x: frame.midX, y: frame.maxY - 30)
+        brick = SKSpriteNode(color: UIColor.red, size: CGSize(width: brickWidth, height: brickHeight))
+        brick.position = CGPoint(x: xPoint, y: yPoint)
         brick.name = "brick"
         brick.physicsBody = SKPhysicsBody(rectangleOf: brick.size)
         brick.physicsBody?.isDynamic = false
@@ -128,33 +134,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         lozeZone.physicsBody?.isDynamic = false
         addChild(lozeZone)
     }
-
+    
     func createBlocks()
     {
-    
-        var xPosition = 10
-        var yPosition = 20
+        var xPosition = Int(frame.midX - (frame.width / 2))
+        var yPosition = 150
         
-        let blockWidth = (int)((screenWidth - 60)/5)
+        let blockWidth = (Int)((frame.width - 60) / 5)
         let blockHeight = 20
         
-        for rows in 1...3{
-            let block = block(frame: CGRect(x: xPosition, y: yPosition, width: blockWidth, height: blockHeight))
-            block.backgroundColor = UIColor.redColor()
-            view?.addSubview(block)
-            
-            blockArray.append(block)
-            allViewArray.append(block)
-            
-            blockCount++
-            
-            xPosition += (blockWidth + 10)
+        for rows in 1...3
+        {
+            for columns in 1...5
+            {
+                makeBrick(xPoint: xPosition, yPoint: yPosition, brickWidth: blockWidth, brickHeight: blockHeight)
+                xPosition += (blockWidth + 10)
+            }
+            xPosition = Int(frame.midX - (frame.width / 2))
+            yPosition += (blockHeight + 10)
             
         }
         
-        xPosition = 10
-        yPosition += (blockeHeight + 10)
-    
     }
-    
 }
