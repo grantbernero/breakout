@@ -28,7 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         makePaddle()
         makeLoseZone()
         createBlocks()
-        ball.physicsBody?.applyImpulse(CGVector(dx: 15, dy: 15)) //puts ball in motion
+        ball.physicsBody?.applyImpulse(CGVector(dx: 3, dy: 3)) //puts ball in motion
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -54,11 +54,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         if contact.bodyA.node?.name == "brick" || contact.bodyB.node?.name == "brick"
         {
             print("You win!")
-            brickHit += 1
-            if brickHit == 3
-            {
-                brick.removeFromParent()
-            }
+            contact.bodyB.node?.removeFromParent()
+            
         }
         else if contact.bodyA.node?.name == "lozeZone" || contact.bodyB.node?.name == "lozeZone"
         {
@@ -94,7 +91,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         ball.physicsBody = SKPhysicsBody(rectangleOf: ball.size)
         ball.physicsBody?.isDynamic = true
         ball.physicsBody?.usesPreciseCollisionDetection = true
-        ball.physicsBody?.applyImpulse(CGVector(dx: 15, dy: 15)) //puts ball in motion
         ball.physicsBody?.affectedByGravity = false
         ball.physicsBody?.allowsRotation = false
         ball.physicsBody?.friction = 0
@@ -140,7 +136,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         var xPosition = Int(frame.midX - (frame.width / 2))
         var yPosition = 150
         
-        let blockWidth = (Int)((frame.width - 60) / 5)
+        let blockWidth = (Int)((frame.width - 60) / 6)
         let blockHeight = 20
         
         for rows in 1...3
@@ -148,7 +144,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate
             for columns in 1...5
             {
                 makeBrick(xPoint: xPosition, yPoint: yPosition, brickWidth: blockWidth, brickHeight: blockHeight)
-                xPosition += (blockWidth + 10)
+                xPosition += (blockWidth + 30)
             }
             xPosition = Int(frame.midX - (frame.width / 2))
             yPosition += (blockHeight + 10)
@@ -156,4 +152,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate
         }
         
     }
+    
+   // func isGameWon() -> Bool
+    //{
+    // "if there are 0 blocks left, you win"
+    //}
+    //
+   // func isGameLost() -> Bool
+   // {
+    // "if the ball is below the paddle, you lose"
+   // }
 }
